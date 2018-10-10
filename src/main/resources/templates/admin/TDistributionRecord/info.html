@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="admin/layout">
+
+<div layout:fragment="content" class="admin-main layui-anim layui-anim-upbit" style="margin: 15px;">
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend th:text="|${info.id} 信息编辑|"></legend>
+    </fieldset>
+
+    <form class="layui-form" method="post" action="">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">userId</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="userId" th:value="${info.userId}" placeholder="请输入userId"
+                       title="userId"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">userId提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">loungehallId</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="loungehallId" th:value="${info.loungehallId}"
+                       placeholder="请输入loungehallId"
+                       title="loungehallId"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">loungehallId提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">type</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="type" th:value="${info.type}" placeholder="请输入type"
+                       title="type"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">type提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">name</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="name" th:value="${info.name}" placeholder="请输入name"
+                       title="name"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">name提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">mobile</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="mobile" th:value="${info.mobile}" placeholder="请输入mobile"
+                       title="mobile"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">mobile提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">province</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="province" th:value="${info.province}"
+                       placeholder="请输入province"
+                       title="province"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">province提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">city</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="city" th:value="${info.city}" placeholder="请输入city"
+                       title="city"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">city提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">district</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="district" th:value="${info.district}"
+                       placeholder="请输入district"
+                       title="district"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">district提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">address</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="address" th:value="${info.address}"
+                       placeholder="请输入address"
+                       title="address"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">address提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">extractionTime</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="extractionTime" th:value="${info.extractionTime}"
+                       placeholder="请输入extractionTime"
+                       title="extractionTime"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">extractionTime提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">createDate</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="createDate" th:value="${info.createDate}"
+                       placeholder="请输入createDate"
+                       title="createDate"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">createDate提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">updateDate</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="updateDate" th:value="${info.updateDate}"
+                       placeholder="请输入updateDate"
+                       title="updateDate"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">updateDate提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">remarks</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="remarks" th:value="${info.remarks}"
+                       placeholder="请输入remarks"
+                       title="remarks"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">remarks提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">delFlag</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="delFlag" th:value="${info.delFlag}"
+                       placeholder="请输入delFlag"
+                       title="delFlag"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">delFlag提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">status</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="status" th:value="${info.status}" placeholder="请输入status"
+                       title="status"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">status提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="">
+                    <i class="layui-icon">&#xea97;</i>
+                    保存
+                </button>
+                <button type="button" class="layui-btn" id="btnClose">
+                    <i class="layui-icon">&#xe68d;</i>
+                    关闭
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        TX.INIT(function (layui) {
+
+            var form = layui.form;
+            form.on("submit", function (data) {
+
+                TX.CORE.p({
+                    data: $("form.layui-form").serialize(),
+                    success: function (resp) {
+                        if (resp.success) {
+                            TX.MSG.msg("保存成功", {time: 1500}, function () {
+                                parent.tab.openTab("/admin/tdistributionrecord/index", {refershType: "refersh"});
+                            });
+                        } else {
+                            TX.MSG.msg(resp.msg, {icon: 2});
+                        }
+                    }
+                });
+
+            });
+
+
+            $("#btnClose").click(function () {
+                if (parent.window.TX.TEMP.LAYERINDEX) {
+                    parent.window.layer.close(parent.window.TX.TEMP.LAYERINDEX);
+                } else {
+                    var currentTabId = parent.tab.getCurrentTabId();
+                    parent.tab.deleteTab(currentTabId);
+                }
+            });
+
+        });
+    </script>
+</th:block>

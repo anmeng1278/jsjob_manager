@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.jsj.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="cn.com.jsj.entity.Order">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="total_fee" property="totalFee" jdbcType="INTEGER"/>
+        <result column="paytime" property="paytime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR"/>
+        <result column="transaction_id" property="transactionId" jdbcType="VARCHAR"/>
+        <result column="receive_coupon_id" property="receiveCouponId" jdbcType="VARCHAR"/>
+        <result column="coupon_price" property="couponPrice" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <!--一个订单对应一个用户-->
+        <association property="t_user" javaType="cn.com.jsj.entity.User">
+            <id property="id" column="userId"></id>
+        </association>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, user_id, total_fee, paytime, status, out_trade_no, transaction_id, receive_coupon_id, 
+    coupon_price, create_date, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from t_order
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!--查询订单产品信息-->
+    <select id="selectOrderProduct" resultMap="BaseResultMap">
+    select t.id, t.total_fee, t.paytime, t.out_trade_no
+    from t_order t, r_order_product op
+    where t.id = op.order_id
+    and t.user_id = :userId
+    and t.status = :status
+    and op.source = :source
+    order by t.paytime desc
+
+  </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+    <insert id="insert" parameterType="cn.com.jsj.entity.Order">
+    insert into t_order (id, user_id, total_fee, 
+      paytime, status, out_trade_no, 
+      transaction_id, receive_coupon_id, coupon_price, 
+      create_date, update_date, remarks, 
+      del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{totalFee,jdbcType=INTEGER}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{outTradeNo,jdbcType=VARCHAR}, 
+      #{transactionId,jdbcType=VARCHAR}, #{receiveCouponId,jdbcType=VARCHAR}, #{couponPrice,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+
+    <insert id="insertSelective" parameterType="cn.com.jsj.entity.Order">
+        insert into t_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="totalFee != null">
+                total_fee,
+            </if>
+            <if test="paytime != null">
+                paytime,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="transactionId != null">
+                transaction_id,
+            </if>
+            <if test="receiveCouponId != null">
+                receive_coupon_id,
+            </if>
+            <if test="couponPrice != null">
+                coupon_price,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="totalFee != null">
+                #{totalFee,jdbcType=INTEGER},
+            </if>
+            <if test="paytime != null">
+                #{paytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionId != null">
+                #{transactionId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveCouponId != null">
+                #{receiveCouponId,jdbcType=VARCHAR},
+            </if>
+            <if test="couponPrice != null">
+                #{couponPrice,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.jsj.entity.Order">
+        update t_order
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="totalFee != null">
+                total_fee = #{totalFee,jdbcType=INTEGER},
+            </if>
+            <if test="paytime != null">
+                paytime = #{paytime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="transactionId != null">
+                transaction_id = #{transactionId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveCouponId != null">
+                receive_coupon_id = #{receiveCouponId,jdbcType=VARCHAR},
+            </if>
+            <if test="couponPrice != null">
+                coupon_price = #{couponPrice,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.jsj.entity.Order">
+    update t_order
+    set user_id = #{userId,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=INTEGER},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      transaction_id = #{transactionId,jdbcType=VARCHAR},
+      receive_coupon_id = #{receiveCouponId,jdbcType=VARCHAR},
+      coupon_price = #{couponPrice,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

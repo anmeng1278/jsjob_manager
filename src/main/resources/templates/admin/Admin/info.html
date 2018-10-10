@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="admin/layout">
+
+<div layout:fragment="content" class="admin-main layui-anim layui-anim-upbit" style="margin: 15px;">
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend th:text="|${info.adminId} 信息编辑|"></legend>
+    </fieldset>
+
+    <form class="layui-form" method="post" action="">
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">loginName</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="loginName" th:value="${info.loginName}"
+                       placeholder="请输入loginName"
+                       title="loginName"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">loginName提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">password</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="password" th:value="${info.password}"
+                       placeholder="请输入password"
+                       title="password"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">password提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">lastLoginIp</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="lastLoginIp" th:value="${info.lastLoginIp}"
+                       placeholder="请输入lastLoginIp"
+                       title="lastLoginIp"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">lastLoginIp提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">lastLoginTime</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="lastLoginTime" th:value="${info.lastLoginTime}"
+                       placeholder="请输入lastLoginTime"
+                       title="lastLoginTime"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">lastLoginTime提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">realName</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="realName" th:value="${info.realName}"
+                       placeholder="请输入realName"
+                       title="realName"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">realName提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">ifpass</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="ifpass" th:value="${info.ifpass}" placeholder="请输入ifpass"
+                       title="ifpass"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">ifpass提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">createTime</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="createTime" th:value="${info.createTime}"
+                       placeholder="请输入createTime"
+                       title="createTime"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">createTime提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">updateTime</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="updateTime" th:value="${info.updateTime}"
+                       placeholder="请输入updateTime"
+                       title="updateTime"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">updateTime提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">deleteTime</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="deleteTime" th:value="${info.deleteTime}"
+                       placeholder="请输入deleteTime"
+                       title="deleteTime"/>
+            </div>
+            <div class="layui-form-mid layui-word-aux">deleteTime提示</div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="">
+                    <i class="layui-icon">&#xea97;</i>
+                    保存
+                </button>
+                <button type="button" class="layui-btn" id="btnClose">
+                    <i class="layui-icon">&#xe68d;</i>
+                    关闭
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        TX.INIT(function (layui) {
+
+            var form = layui.form;
+            form.on("submit", function (data) {
+
+                TX.CORE.p({
+                    data: $("form.layui-form").serialize(),
+                    success: function (resp) {
+                        if (resp.success) {
+                            TX.MSG.msg("保存成功", {time: 1500}, function () {
+                                parent.tab.openTab("/admin/admin/index", {refershType: "refersh"});
+                            });
+                        } else {
+                            TX.MSG.msg(resp.msg, {icon: 2});
+                        }
+                    }
+                });
+
+            });
+
+
+            $("#btnClose").click(function () {
+                if (parent.window.TX.TEMP.LAYERINDEX) {
+                    parent.window.layer.close(parent.window.TX.TEMP.LAYERINDEX);
+                } else {
+                    var currentTabId = parent.tab.getCurrentTabId();
+                    parent.tab.deleteTab(currentTabId);
+                }
+            });
+
+        });
+    </script>
+</th:block>

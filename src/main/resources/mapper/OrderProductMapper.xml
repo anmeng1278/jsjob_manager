@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.jsj.dao.OrderProductMapper">
+    <resultMap id="BaseResultMap" type="cn.com.jsj.entity.OrderProduct">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="order_id" property="orderId" jdbcType="VARCHAR"/>
+        <result column="product_id" property="productId" jdbcType="VARCHAR"/>
+        <result column="cnt" property="cnt" jdbcType="INTEGER"/>
+        <result column="source" property="source" jdbcType="TINYINT"/>
+        <association property="order" javaType="cn.com.jsj.entity.Order">
+            <id column="id" property="id" jdbcType="VARCHAR"/>
+            <result column="status" property="status" jdbcType="TINYINT"/>
+        </association>
+        <collection property="productList" ofType="cn.com.jsj.entity.Product">
+            <id column="id" property="id" jdbcType="VARCHAR"/>
+            <result column="title" property="title" jdbcType="VARCHAR"/>
+            <result column="total" property="total" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    
+
+    <resultMap id="OrderMap" type="cn.com.jsj.entity.Order">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, order_id, product_id, cnt, source
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from r_order_product
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!--查询订单产品列表-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        <include refid="Base_Column_List"/>
+        from r_order_product
+    </select>
+
+    <!--计算产品剩余量-->
+    <select id="productInventory" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select sum(cnt) cnt
+    from r_order_product op
+    left join t_order t on op.order_id = t.id where t.status = 1
+    and op.product_id = #{productId}
+  </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from r_order_product
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="cn.com.jsj.entity.OrderProduct">
+    insert into r_order_product (id, order_id, product_id, 
+      cnt, source)
+    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{productId,jdbcType=VARCHAR}, 
+      #{cnt,jdbcType=INTEGER}, #{source,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="cn.com.jsj.entity.OrderProduct">
+        insert into r_order_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="cnt != null">
+                cnt,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="cnt != null">
+                #{cnt,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.com.jsj.entity.OrderProduct">
+        update r_order_product
+        <set>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                product_id = #{productId,jdbcType=VARCHAR},
+            </if>
+            <if test="cnt != null">
+                cnt = #{cnt,jdbcType=INTEGER},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.com.jsj.entity.OrderProduct">
+    update r_order_product
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=VARCHAR},
+      cnt = #{cnt,jdbcType=INTEGER},
+      source = #{source,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
