@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorator="admin/layout">
+
+<div layout:fragment="content" class="admin-main layui-anim layui-anim-upbit" style="margin: 15px;">
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend th:text="| 信息编辑|"></legend>
+    </fieldset>
+
+    <form class="layui-form" method="POST" action="/product/save">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品名称</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="title"
+                       placeholder="请输入商品名称"
+                       title="typeId"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品类目</label>
+            <div class="layui-input-inline">
+                <select name="typeId" lay-verify="required"  >
+                    <option th:each="productType: ${productTypeList}" th:value="${productType.id}" th:text="${productType.typeTitle}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品封面</label>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn" id="test1">上传图片</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" id="demo1" style="width: 80px">
+                        <p id="demoText"></p>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">简介</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="introduce"
+                       placeholder="请输入商品简介"
+                       title="introduce"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">商品单价</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="price"
+                       placeholder="请输入商品单价"
+                       title="price"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">原价</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="originalCost"
+                       placeholder="请输入原价"
+                       title="originalCost"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">库存量</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="total" placeholder="请输入库存量"
+                       title="total"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">优先级</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="priority"
+                       placeholder="请输入商品优先级"
+                       title="priority"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否支持配送</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="distribution"
+                       placeholder="请输入distribution"
+                       title="distribution"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">使用说明</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="instruction"
+                       placeholder="请输入instruction"
+                       title="instruction"/>
+            </div>
+        </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品图片</label>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn" id="test">上传图片</button>
+                    <div class="layui-upload-list">
+                        <img class="layui-upload-img" id="demo">
+                        <p id="demoText1"></p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="layui-form-item">
+            <label class="layui-form-label">单位</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="unit"  placeholder="请输入unit"
+                       title="unit"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="remarks"
+                       placeholder="请输入remarks"
+                       title="remarks"/>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否支持自提</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="extraction"
+                       placeholder="请输入extraction"
+                       title="extraction"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="">
+                    <i class="layui-icon">&#xea97;</i>
+                    <a th:href="@{'/product/save'}">保存</a>
+                </button>
+                <button type="button" class="layui-btn" id="btnClose">
+                    <i class="layui-icon">&#xe68d;</i>
+                    关闭
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        layui.use('upload', function () {
+            var $ = layui.jquery
+                , upload = layui.upload;
+
+            //普通图片上传
+            var uploadInst = upload.render({
+                elem: '#test1'
+                , url: '/upload/'
+                , before: function (obj) {
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#demo1').attr('src', result); //图片链接（base64）
+                    });
+                }
+                , done: function (res) {
+                    //如果上传失败
+                    if (res.code > 0) {
+                        return layer.msg('上传失败');
+                    }
+                    //上传成功
+                }
+                , error: function () {
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function () {
+                        uploadInst.upload();
+                    });
+                }
+            });
+        });
+
+        TX.INIT(function (layui) {
+
+            var form = layui.form;
+            form.on("submit", function (data) {
+
+                TX.CORE.p({
+                    data: $("form.layui-form").serialize(),
+                    success: function (resp) {
+                        if (resp.success) {
+                            TX.MSG.msg("保存成功", {time: 1500}, function () {
+                                parent.tab.openTab("/admin/tproduct/index", {refershType: "refersh"});
+                            });
+                        } else {
+                            TX.MSG.msg(resp.msg, {icon: 2});
+                        }
+                    }
+                });
+
+            });
+
+
+            $("#btnClose").click(function () {
+                if (parent.window.TX.TEMP.LAYERINDEX) {
+                    parent.window.layer.close(parent.window.TX.TEMP.LAYERINDEX);
+                } else {
+                    var currentTabId = parent.tab.getCurrentTabId();
+                    parent.tab.deleteTab(currentTabId);
+                }
+            });
+
+        });
+    </script>
+</th:block>
